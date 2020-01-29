@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-//import axios from "axios";
+import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
+import Footer from "./components/Footer"
 
 class App extends Component {
 
@@ -9,7 +10,9 @@ class App extends Component {
 
     return (
       <div className="App">
+        <Navbar />
         <ProductList />
+        <Footer />
       </div>
     );
   }

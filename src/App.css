@@ -1,6 +1,66 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
+.App {
+  /* margin: auto; */
+  text-align: center;
+  color: #282c34; 
+}
+
+nav, footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 5%; 
+}
+
+nav div ul, footer {
+  margin-top: 0;
+  font-style: italic;
+  list-style: none;
+}
+
+.Prod-container {
+  min-height: 100vh;
+  padding: 5%; 
+  font-size: calc(6px + 1.7vmin);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.Prod-item {
+  max-width: calc(30% - 20px);  
+  padding: 2%;
+  border: 1px solid whitesmoke;
+}
+
+p {
+  text-overflow: ellipsis;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  border-radius: 10px;
+  color: whitesmoke;
+  background: #282c34;
+  width: 90%;
+  padding: 13px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 0px;
+  box-shadow: none ;
+  transform: none ;
+}
+
+
+
+/**********************/
 
 .App-logo {
   height: 40vmin;
@@ -11,17 +71,6 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
