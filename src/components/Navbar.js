@@ -2,8 +2,8 @@ import React from "react";
 
 const Navbar = props => (
     <nav>
-        <div>Navbar </div>
-        <div className="fas fa-shopping-basket fa-lg"></div>
+        <div className="fas fa-hippo fa-lg" onClick={() => props.goToProducts()}> BOARDS </div>
+        <div className="fas fa-shopping-basket fa-lg" onClick={() => props.goToCheckout()} />
     </nav>
 )
 

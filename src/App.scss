@@ -1,0 +1,58 @@
+
+* {
+  box-sizing: border-box;
+}
+.App {
+  /* margin: auto; */
+  text-align: center;
+  color: #282c34; 
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  /* background-color: white; */
+  div ul, footer {
+    margin-top: 0;
+    font-style: italic;
+    list-style: none;
+  } 
+}
+
+nav, footer {
+  display: flex;
+  justify-content: space-between;
+  /* margin: 1px;  */
+  padding: 3% 5%; 
+  font-style: italic;
+} 
+
+h1 {
+  margin-top: auto;
+}
+
+.Container { 
+  margin-top: 40px;
+  padding-top: 5%;  
+}
+
+button, input[type=submit] {
+  border-radius: 8px;
+  color: whitesmoke;
+  // background: #282c34;
+  background: mediumseagreen;
+  padding: 13px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  
+  /* border: 0px;
+  box-shadow: none ;
+  transform: none ; */
+}
+
+button:hover, input[type=submit]:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+} 

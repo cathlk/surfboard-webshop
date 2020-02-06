@@ -1,78 +1,35 @@
-import React, { Component } from "react";
-import axios from "axios";
-// import '../App.css';
+import React from "react";
+// import ProductItem from "./ProductItem";
+import "./Product.scss"
 
-import ProductItem from "./ProductItem";
+function ProductList(props) {
+    const productList = props.productList;
 
-class ProductList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            productList: [],
-            cart: [],
-            customer: {
-                firstName: "",
-                lastName: "",
-                address: "",
-
-            }
-        }
-        this.addToCart = this.addToCart.bind(this);
-    }
-
-    componentDidMount() {
-        this.getBoards()
-    }
-
-    getBoards() {
-        axios.get('http://localhost:5001/surfboard')
-            .then(res => {
-                this.setState({ productList: res.data })
-            })
-    }
-
-    addToCart(theid) {
-        const addBoard = this.state.productList.find(i => i.id === theid);
-        let newCartList = [...this.state.cart, addBoard];
-        // console.log("Found board to add: ", newCartList);
-
-
-        this.setState({
-            cart: newCartList
-        });
-        // console.log(addBoard);
-    }
-
-    //skicka cart till order
-    //skapa kund till order 
-    //skicka till order
-
-    createCustomer() {
-
-    }
-
-
-    sendOrder() {
-    }
-
-
-    render() {
-        // console.log("Cart in render: ", this.state.cart);
-        const boards = this.state.productList;
-        const addBoard = this.addToCart;
-
+    const board = productList.map(item => {
         return (
-            <div>
-                <h1>Surfboards</h1>
-                <ProductItem
-                    productList={boards}
-                    addToCart={addBoard}
-                />
-            </div>
-            // </div>
-        );
-    }
+            <span className="Prod-item" key={item.id}>
+                <img src={item.imageUrl} alt={item.shape} />
+                <h2 className="Prod-header">{item.shape}</h2>
+                <p className="Prod-descr">{item.description}</p>
+                <span className="Prod-bottom">
+                    <p className="Prod-price">{item.price} kr</p>
+                    <button onClick={() => props.addToCart(item.id)}>
+                        Add to cart
+                    </button>
+                </span>
+            </span>
+        )
+    });
 
+    return (
+        <div id="Products">
+            {/* <ProductItem
+        productList={props.productList}
+        addToCart={props.addToCart}
+/> */}
+            {board}
+        </div>
+    );
 }
 
-export default ProductList; 
+export default ProductList;
