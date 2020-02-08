@@ -3,6 +3,7 @@ import "./Checkout.scss";
 
 
 function Customer(props) {
+
     return (
         <div className="Checkout-child">
             <h2>Send them my way </h2>

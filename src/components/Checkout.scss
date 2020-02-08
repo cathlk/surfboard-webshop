@@ -1,5 +1,5 @@
 
-#Checkout {
+.Checkout {
     display: flex; 
     flex-direction: row;
     flex-wrap: wrap;
@@ -30,6 +30,16 @@ h1 {
     }
 }
 
+#Confirm-Box {
+    min-width: 80%;
+    padding: 15%;
+    padding-top: 0;
+    h2 {
+        padding-top: 0;
+    }
+
+}
+
 
 /***** order info *****/
         
@@ -52,7 +62,7 @@ h1 {
     }
 }
 
-#Tot-price {
+.Tot-price {
     text-align: right;
     max-width: 96%;
 }
