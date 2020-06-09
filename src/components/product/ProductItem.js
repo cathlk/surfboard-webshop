@@ -21,6 +21,7 @@ function ProductItem(props) {
             </span>
         )
     });
+
     return (
         <div id="Products">
             {board}

@@ -4,8 +4,12 @@
 }
 .App {
   /* margin: auto; */
+  min-height: 100vw;
   text-align: center;
   color: #282c34; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 nav {

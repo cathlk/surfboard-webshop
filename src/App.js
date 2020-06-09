@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer"
+import Navbar from "./components/navbarFooter/Navbar";
+import Footer from "./components/navbarFooter/Footer"
+import Checkout from "./components/checkout/Checkout";
 
-import ProductList from "./components/ProductList";
-import Checkout from "./components/Checkout";
-import ConfirmationPage from './components/ConfirmationPage';
+import ProductList from "./components/product/ProductList";
+import ConfirmationPage from './components/checkout/ConfirmationPage';
+import Admin from './components/admin/Admin';
+// import ProductItem from './components/ProductItem';
+// import Home from './components/boards/Boards';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +26,7 @@ class App extends Component {
       showProductList: true,
       showCheckout: false,
       showConfirmPage: false,
+      showAdmin: false,
 
       //products in stock and added to cart 
       productList: [],
@@ -26,11 +36,15 @@ class App extends Component {
       //customer, make as an object instead? 
       firstName: "",
       lastName: "",
-      address: ""
+      address: "",
+
+      //All orders 
+      allOrders: [],
     }
 
     this.goToCheckout = this.goToCheckout.bind(this);
     this.goToProducts = this.goToProducts.bind(this);
+    this.goToAdmin = this.goToAdmin.bind(this);
 
     this.addToCart = this.addToCart.bind(this);
     this.removeCartItem = this.removeCartItem.bind(this);
@@ -38,6 +52,7 @@ class App extends Component {
     this.sendOrder = this.sendOrder.bind(this);
 
     this.goToOrderconfirmation = this.goToOrderconfirmation.bind(this);
+    this.getallOrders = this.getallOrders.bind(this);
   }
 
   componentDidMount() {
@@ -49,10 +64,23 @@ class App extends Component {
       await axios.get('http://localhost:5001/surfboard')
         .then(res => {
           this.setState({ productList: res.data })
+          console.log("surfboards", res)
+
         })
     } catch (e) {
-      console.log(`😱 Axios request failed: ${e}`);
+      console.log(`😱 Axios boards request failed: ${e}`);
+    }
+  }
 
+  async getallOrders() {
+    try {
+      await axios.get('http://localhost:5001/order')
+        .then(res => {
+          this.setState({ allOrders: res.data })
+          console.log("allOrders", res)
+        })
+    } catch (e) {
+      console.log(`😱 Axios allORderRows request failed: ${e}`);
     }
   }
 
@@ -71,7 +99,8 @@ class App extends Component {
     this.setState({
       showCheckout: true,
       showProductList: false,
-      showConfirmPage: false
+      showConfirmPage: false,
+      showAdmin: false,
     });
     // console.log("Checkout");
   }
@@ -80,7 +109,8 @@ class App extends Component {
     this.setState({
       showProductList: true,
       showCheckout: false,
-      showConfirmPage: false
+      showConfirmPage: false,
+      showAdmin: false,
     });
   }
 
@@ -88,13 +118,24 @@ class App extends Component {
     this.setState({
       showConfirmPage: true,
       showCheckout: false,
-      showProductList: false
+      showProductList: false,
+      showAdmin: false,
     })
   }
 
   removeCartItem(id) {
     const filteredCart = this.state.cart.filter(i => i.id !== id);
     this.setState({ cart: filteredCart });
+  }
+
+  goToAdmin() {
+    this.setState({
+      showAdmin: true,
+      showCheckout: false,
+      showProductList: false,
+      showConfirm: false,
+    });
+    this.getallOrders();
   }
 
   handleChange(e) {
@@ -120,13 +161,24 @@ class App extends Component {
 
     axios.post('http://localhost:5001/order', order)
       .then(res => {
-        console.log("res data", res.data)
+        console.log("res data", res.data.data)
       })
       .then(this.goToOrderconfirmation())
   }
 
   render() {
-    const { showProductList, showCheckout, showConfirmPage, productList, cart, firstName, lastName, address } = this.state;
+    const {
+      showProductList,
+      showCheckout,
+      showConfirmPage,
+      showAdmin,
+      productList,
+      cart,
+      firstName,
+      lastName,
+      address,
+      allOrders,
+    } = this.state;
 
     // const showProdList = this.state.showProductList;
     // const showCheckout = this.state.showCheckout;
@@ -138,6 +190,9 @@ class App extends Component {
         goToProducts={this.goToProducts}
         showCheckout={showCheckout}
         goToCheckout={this.goToCheckout}
+        showAdmin={showAdmin}
+        goToAdmin={this.goToAdmin}
+        goToOrderconfirmation={this.goToOrderconfirmation}
       />
     );
 
@@ -178,26 +233,52 @@ class App extends Component {
         showProdList={showProductList}
       />);
 
+    const admin = (
+      <Admin
+        allOrders={allOrders}
+      // getallOrders={this.getallOrders}
+      />);
+
     return (
-      <div className="App">
-        {nav}
+      <Router>
+        <div className="App">
+          {nav}
 
-        {showProductList === true && showCheckout === false && showConfirmPage === false && (
-          prodList
-        )}
+          {showProductList === true && showCheckout === false && showConfirmPage === false && showAdmin === false && (
+            prodList
+          )}
 
-        {showCheckout === true && showProductList === false && showConfirmPage === false && (
-          checkout
-        )}
+          {showCheckout === true && showProductList === false && showConfirmPage === false && showAdmin === false && (
+            checkout
+          )}
 
-        {showConfirmPage === true && showCheckout === false && showProductList === false && (
-          confirmPage
-        )}
+          {showConfirmPage === true && showCheckout === false && showProductList === false && showAdmin === false && (
+            confirmPage
+          )}
 
-        <Footer
-          goToOrderconfirmation={this.goToOrderconfirmation} />
+          {showAdmin === true && showConfirmPage === false && showCheckout === false && showProductList === false && (
+            admin
+          )}
 
-      </div>
+
+          {/* <Switch> */}
+          {/* <Route path="/admin"> */}
+          {/* <Admin /> */}
+          {/* </Route> */}
+          {/* <Route path="/"> */}
+          {/* <Home
+                productList={productList}
+                cart={cart}
+                addToCart={this.addToCart}
+              /> */}
+          {/* </Route>
+          </Switch> */}
+
+          <Footer
+            goToAdmin={this.goToAdmin}
+            goToOrderconfirmation={this.goToOrderconfirmation} />
+        </div>
+      </Router>
     );
   }
 }
