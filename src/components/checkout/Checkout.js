@@ -18,6 +18,7 @@ function Checkout(props) {
         <div className="Checkout">
             <CheckoutItem
                 cart={props.cart}
+                selectedSize={props.selectedSize}
                 removeCartItem={props.removeCartItem}
             />
             {customer}

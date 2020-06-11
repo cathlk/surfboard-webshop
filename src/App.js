@@ -30,7 +30,10 @@ class App extends Component {
 
       //products in stock and added to cart 
       productList: [],
+      boardSizeList: [],
+      sizeId: null,
       cart: [],
+      selectedSize: [],
       // totPrice: 0,
 
       //customer, make as an object instead? 
@@ -46,6 +49,7 @@ class App extends Component {
     this.goToProducts = this.goToProducts.bind(this);
     this.goToAdmin = this.goToAdmin.bind(this);
 
+    this.updateSizeId = this.updateSizeId.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.removeCartItem = this.removeCartItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -57,6 +61,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getBoards()
+    this.getBoardSizes()
   }
 
   async getBoards() {
@@ -65,10 +70,21 @@ class App extends Component {
         .then(res => {
           this.setState({ productList: res.data })
           console.log("surfboards", res)
-
         })
     } catch (e) {
       console.log(`😱 Axios boards request failed: ${e}`);
+    }
+  }
+
+  async getBoardSizes() {
+    try {
+      await axios.get('http://localhost:5001/size')
+        .then(res => {
+          this.setState({ boardSizeList: res.data })
+          console.log("size", res)
+        })
+    } catch (e) {
+      console.log(`😱 Axios boardSizeList request failed: ${e}`);
     }
   }
 
@@ -84,16 +100,28 @@ class App extends Component {
     }
   }
 
+  updateSizeId(selected) {
+    this.selectedSize = this.state.boardSizeList.find(s => s.name === selected);
+    this.setState({ selectedSize: this.selectedSize });
+    this.setState({ sizeId: this.selectedSize.id });
+
+    console.log("selectedSize", this.selectedSize)
+    console.log("selectedSize id", this.selectedSize.id)
+  }
+
   addToCart(theid) {
     let addBoard = this.state.productList.find(i => i.id === theid);
-    addBoard.SizeId = 1;
+    addBoard.SizeId = this.state.sizeId;
+
     let newCartList = [...this.state.cart, addBoard];
-    // console.log("Found board to add: ", newCartList);
+    console.log("Found board to add: ", newCartList);
 
     this.setState({
       cart: newCartList
     });
   }
+
+
 
   goToCheckout() {
     this.setState({
@@ -173,7 +201,9 @@ class App extends Component {
       showConfirmPage,
       showAdmin,
       productList,
+      boardSizeList,
       cart,
+      selectedSize,
       firstName,
       lastName,
       address,
@@ -199,13 +229,17 @@ class App extends Component {
     const prodList = (
       <ProductList
         productList={productList}
+        boardSizeList={boardSizeList}
+        updateSizeId={this.updateSizeId}
         cart={cart}
+        handleChange={this.handleChange}
         addToCart={this.addToCart}
       />);
 
     const checkout = (
       <Checkout
         cart={cart}
+        selectedSize={selectedSize}
         sendOrder={this.sendOrder}
         removeCartItem={this.removeCartItem}
 
@@ -223,6 +257,7 @@ class App extends Component {
     const confirmPage = (
       <ConfirmationPage
         cart={cart}
+        selectedSize={selectedSize}
         firstName={firstName}
         lastName={lastName}
         address={address}
