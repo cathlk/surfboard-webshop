@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../checkout/Checkout.scss";
 
 function Admin(props) {
-    console.log("Admin");
     const allOrders = props.allOrders;
+    console.log("Admin", allOrders);
+
+    useEffect(() => {
+        props.getallOrders();
+    }, [props.showAdmin]);
+    useEffect(() => {
+        props.goToAdmin();
+    }, [props.allOrders]);
+
     const order = allOrders.map(o => {
         return (
             <div key={o.id} style={{ textAlign: "left", padding: 20 }}>
@@ -33,4 +41,5 @@ function Admin(props) {
         </div>
     )
 }
+
 export default Admin; 

@@ -3,9 +3,8 @@ import React from "react";
 function CheckoutItem(props) {
     const cart = props.cart;
     const selectedSize = props.selectedSize;
+    // console.log("s size", selectedSize)
     const totPrice = cart.reduce((acc, curr) => acc + curr.price, 0);
-
-    console.log("s size", selectedSize)
 
     const board = cart.map(item => {
         return (

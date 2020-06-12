@@ -1,11 +1,11 @@
 import React from "react";
 import "./Checkout.scss";
 
-
 function ConfirmationPage(props) {
     const cart = props.cart;
     const selectedSize = props.selectedSize;
     const totPrice = cart.reduce((acc, curr) => acc + curr.price, 0);
+
     const orderRow = cart.map(item => {
         return (
             <div className="Order-row" key={item.id}>

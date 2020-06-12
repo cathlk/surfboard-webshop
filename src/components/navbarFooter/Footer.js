@@ -5,11 +5,8 @@ function Footer(props) {
 
     return (
         <footer>
-            {/* <Link to="/admin"> */}
-            <span onClick={() => props.goToAdmin()}> Admin route: see all orders</span>
-            {/* </Link> */}
+            {/* <span onClick={() => props.goToAdmin()}> Admin route: see all orders</span> */}
             <span onClick={() => props.goToOrderconfirmation()}>OrderConfirmPage</span>
-
         </footer>
     )
 }
