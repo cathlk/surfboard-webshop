@@ -10,7 +10,10 @@ function ProductList(props) {
 
             <ProductItem
                 productList={props.productList}
+                boardSizeList={props.boardSizeList}
+                updateSizeId={props.updateSizeId}
                 addToCart={props.addToCart}
+                handleChange={props.handleChange}
             />
         </div>
     );

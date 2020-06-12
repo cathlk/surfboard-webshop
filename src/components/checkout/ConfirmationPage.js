@@ -1,19 +1,21 @@
 import React from "react";
 import "./Checkout.scss";
 
-
 function ConfirmationPage(props) {
     const cart = props.cart;
+    const selectedSize = props.selectedSize;
     const totPrice = cart.reduce((acc, curr) => acc + curr.price, 0);
+
     const orderRow = cart.map(item => {
         return (
-            <p className="Order-row" key={item.id}>
+            <div className="Order-row" key={item.id}>
                 <img src={item.imageUrl} alt={item.shape} />
                 <span className="">
                     <span className="Prod-header">{item.shape} </span>
+                    <span className="Prod-header">{selectedSize.name} </span>
                     <span className="Prod-price"> {item.price} kr </span>
                 </span>
-            </p>
+            </div>
         )
     });
 
